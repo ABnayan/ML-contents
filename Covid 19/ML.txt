@@ -1,0 +1,28 @@
+links:
+
+=============    https://towardsdatascience.com/using-kalman-filter-to-predict-corona-virus-spread-72d91b74cc8
+=============    https://github.com/Rank23/COVID19   =============
+
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7315944/#bib0031
+https://link.springer.com/article/10.1007/s41870-020-00495-9#Fig2
+https://arxiv.org/abs/2008.11639
+https://www.frontiersin.org/articles/10.3389/fcell.2020.00683/full
+https://www.medrxiv.org/content/10.1101/2020.05.18.20105577v3.full.pdf
+
+***** random forest, logistic regression, decision tree, support vector machines, artificial neural
+networks etc. to predict up to 93% total accuracy in the prediction of the mortality rate
+
+1) Feature engineering :  (TF/IDF), Bag of words (BOW) and report length
+   ML: 
+	Logistic regression : predicts the class of numerical variable based on its relationship with the label
+	Multinomial Naïve Bayes: class probabilities of a given text by using Bayes rule
+        Support vector machine (SVM) :  for classifying text into different categories
+	Decision trees: It splits the space recursively according to the inputs and classifies at the bottom of the 			tree
+   Ensemble machine learning: 
+	Bagging : avoiding overfitting . improves the performance of other classification and regression machine 			learning algorithms
+	AdaBoost : It starts with having equal weights for each observation and trains a weak learning algorithm 		            using weighted data. By performing this, a weak classifier is being produced
+	Random forest classifier:  By averaging predictions of all the individual regression trees, the overall 					prediction can be made.
+	Stochastic gradient boosting :used for reducing the correlation between the trees in gradient boosting
+
+
+
