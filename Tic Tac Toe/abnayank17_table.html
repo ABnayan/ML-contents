@@ -1,0 +1,73 @@
+<html>
+<head>
+        <link  type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+        <script  type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script  type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<style>
+ 
+
+ 
+ .dataTables_length{
+    display:none;    
+ } 
+ thead input {
+        width: 100%;
+    }
+    #last_table {
+  font-family: Arial;
+  border-collapse: collapse;
+  width: 80%;
+  padding:10px;
+  border: 1px black;
+}
+
+#last_table td, #last_table th {
+  border: 1px solid #ddd;
+
+}
+
+#last_table tr {background-color: #f2f2f2;} 
+
+#last_table tr{background-color: #ddd;}
+
+#last_table th {
+  background-color: #5B0F9D;
+  color: white;
+  width:20px;
+}
+</style>
+</head>
+<body><table id="last_table" class="display"  >
+        <thead>
+            <tr>
+                <th bgcolor="#5B0F9D" style = "-webkit-text-fill-color: #ffffff; padding-top: 12px;padding-bottom: 12px; text-align: left; ">
+                    </th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for unii,excname,popscore,potamt,potunit,ss in data_results_unii,data_results_exc_name,data_results_pop_score, data_results_pote_amt,data_results_pot_unit,data_results_sim_score  %}
+            <tr>
+                <td value = "{{excname}}" ><input name = 'button2'  onclick = 'CallHumesha2("{{excname}}","{{funccat}}",this)' type = 'checkbox' style="width: 20px;height: 20px; cursor: pointer;"></td>
+                <td>{{unii}}</td>
+                <td>{{excname}}</td>
+                <td>{{popscore}}</td>
+                <td>{{potamt}}</td>
+                <td>{{potunit}}</td>
+                <td>{{ss}}</td> 
+            </tr>
+            {% endfor %} 
+           
+        </tbody>
+    </table>
+<script>
+
+    var table = $('#last_table').DataTable( {
+        orderCellsTop: true,
+        fixedHeader: true,
+        "lengthMenu": [[10,-1], [10, "All"]]
+        
+    } );
+
+</script>
+</body>
+</html>
