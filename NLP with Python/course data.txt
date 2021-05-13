@@ -1,0 +1,20 @@
+Course curriculum, Colab toolkit and data links
+Hi, and welcome to this modern NLP course! Here is a quick summary of the different parts of the course and the links to the Google Colab file for each application. Enjoy!
+
+1. Introduction
+
+2. CNN for NLP - Intuition
+
+3. CNN for NLP - Application (sentimental analyser):
+        Google Colab file: https://colab.research.google.com/drive/1sFa6yosp2bBoB19YLQ07jn_Ic1urU836
+        Data link: http://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip
+
+4. Transformer - Intuition
+        "Attention is all you need" paper: https://papers.nips.cc/paper/7181-attention-is-all-you-need.pdf
+
+5. Transformer - Application (Eng - Fr translator):
+        Google Colab file: https://colab.research.google.com/drive/1i4a26jVRVsAIfAGCe5pnl4l51B6GvjWs
+        Data link: http://www.statmt.org/europarl/ for all pairs
+                          http://www.statmt.org/europarl/v7/fr-en.tgz for the En-Fr in the course
+                          https://drive.google.com/file/d/14wOcOrg8YJWXze6RvMy1cisDJKaFukff/view?usp=sharing for nonbreaking_prefix.en
+                          https://drive.google.com/file/d/1z4iM2n4t1guAxHZ0URfmzrjz3zknW64L/view?usp=sharing for nonbreaking_prefix_fr
