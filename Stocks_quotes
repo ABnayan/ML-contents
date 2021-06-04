@@ -1,0 +1,128 @@
+import pandas as pd
+import numpy as np
+from datetime import datetime
+from statistics import mean
+import statistics
+import seaborn as sns
+import matplotlib.pyplot as plt
+#%matplotlib inline
+import os
+
+import warnings
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.naive_bayes import GaussianNB
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis,LinearDiscriminantAnalysis
+from sklearn.metrics import accuracy_score,roc_auc_score,precision_score
+from sklearn import preprocessing
+from sklearn.linear_model import LinearRegression,LogisticRegression
+import matplotlib.pyplot as plt
+from matplotlib.axes import Axes
+import seaborn as sns
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.feature_selection import SelectFromModel
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import train_test_split
+from sklearn.feature_selection import RFECV
+from sklearn.feature_selection import RFE
+from sklearn.model_selection import cross_val_score
+from sklearn.feature_selection import VarianceThreshold
+from sklearn.pipeline import make_pipeline
+from sklearn.decomposition import PCA
+from collections import Counter
+from sklearn.metrics import confusion_matrix
+import time
+#import scikitplot as skplt
+from sklearn.model_selection import learning_curve
+import itertools
+from sklearn.model_selection import GridSearchCV
+warnings.filterwarnings('ignore')
+# Import label encoder 
+from sklearn import preprocessing 
+import json
+
+
+
+
+
+
+
+
+def model_building(modeldf):
+    
+    modeldf.drop(columns=['Unnamed: 0'],inplace=True)
+    modeldf.drop(columns=['Hardness_Class','Thickness_Class','Group Weight_Class'],inplace=True)
+    
+    num_attr= modeldf.select_dtypes(include=['int','float64'])
+    num_attr.drop(columns=['Group Weight','Hardness','Thickness'],inplace=True)
+    
+    X=num_attr.values
+    y=modeldf['Output_Class'].values
+    
+    from sklearn.model_selection import StratifiedShuffleSplit
+    sss = StratifiedShuffleSplit(n_splits=5, test_size=0.3, random_state=0)
+    for train_index, test_index in sss.split(X, y):
+        #print("TRAIN:", train_index, "TEST:", test_index)
+        X_train, X_test = X[train_index], X[test_index]
+        y_train, y_test = y[train_index], y[test_index]
+        
+    X_train=pd.DataFrame(X_train,columns=num_attr.columns)
+    #print(X_train.columns)
+    #X_train.hist(figsize=(10,15))
+    X_test=pd.DataFrame(X_test,columns=num_attr.columns)
+    #print(X_test.columns)
+    #X_test.hist(figsize=(10,15))
+    
+    ### StandardScaler based transform
+    from sklearn.preprocessing import StandardScaler
+    sc = StandardScaler()
+    X_train = sc.fit_transform(X_train)
+    X_test = sc.transform(X_test)
+    
+    # label_encoder object knows how to understand word labels. 
+    label_encoder = preprocessing.LabelEncoder() 
+    
+    
+    # Baseline - comparing model accuracy using all features across classifiers 
+    classifiers = [
+        DecisionTreeClassifier(),
+        RandomForestClassifier(),
+        KNeighborsClassifier(),
+        SVC(kernel="rbf"),
+        GaussianNB(),
+        LogisticRegression(),
+        LinearDiscriminantAnalysis(),
+        QuadraticDiscriminantAnalysis(),
+        GradientBoostingClassifier()
+        ]
+
+
+    # Naive Train Accuracy
+    algo = []
+    scores = []
+    for clf in classifiers:
+        algo.append(clf.__class__.__name__)
+        scores.append(cross_val_score(clf,X_train,y_train, cv=5,scoring='accuracy').mean())
+    warnings.filterwarnings('ignore')
+    Naivescore_df_Train = pd.DataFrame({'Algorithm': algo, 'Score': scores}).set_index('Algorithm')
+    
+
+    # Naive Test Accuracy
+    algo = []
+    scores = []
+    Score={}
+    
+    for i,clf in enumerate(classifiers):
+        clf = clf.fit(X_train, y_train)
+        y_pred = clf.predict(X_test)
+        algo.append(clf.__class__.__name__)
+        #y_pred=label_encoder.fit_transform(y_pred)
+        Score[i]=pd.DataFrame({"Predicted":y_pred,"Actual":y_test})
+        scores.append(accuracy_score(y_pred, y_test))
+    #warnings.filterwarnings('ignore')
+    Naivescore_df_Test  = pd.DataFrame({'Algorithm': algo, 'Score': scores}).set_index('Algorithm')
+    
+    return Naivescore_df_Test, Score
